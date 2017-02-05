@@ -1,3 +1,5 @@
+sum-up-numbers-simple(X, 0) :-
+	not(number(X)).
 sum-up-numbers-simple([],0). %base-statement, if the list is empty its sum is 0
 sum-up-numbers-simple([X|Y], Z) :-
 
