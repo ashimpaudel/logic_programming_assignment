@@ -10,3 +10,4 @@ sum-up-numbers-simple([X|Y], Z) :-
 	Z is X + W.%#adding x to W generates Z 
 	%then Z is the sum of [X|Y]
 
+%failed-test case = [100,a] 100 True
