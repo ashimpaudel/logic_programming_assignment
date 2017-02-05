@@ -26,6 +26,8 @@ sum-up-numbers-simple([X|Y], Z) :-
 %2. sum-up-numbers-general(L, N)
 
 
+%logic similar to number 1
+
 
 sum-up-numbers-general(X, 0) :-
 	not(number(X)).
