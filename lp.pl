@@ -1,15 +1,17 @@
 %1. sum-up-numbers-simple(L, N)
 
+sum-up-numbers-simple([],0). 
+%base-statement, if the list is empty its sum is 0
+
 sum-up-numbers-simple(X, 0) :-
+	not(is_list(X)),
 	not(number(X)).
 
 sum-up-numbers-simple(X, X):- %
 	number(X).
 
 %write a function which returns 0 if not number
-chec
 
-sum-up-numbers-simple([],0). %base-statement, if the list is empty its sum is 0
 
 
 sum-up-numbers-simple([X|Y], Z) :-
