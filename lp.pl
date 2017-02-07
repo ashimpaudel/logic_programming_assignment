@@ -83,6 +83,7 @@ find_min_list(X, Y):-
 	length(X,1),
 	[A|B] = X,
 	Y is A.
+
 find_min_list(L1, N):-
 	[A|B] = L1,	
 	number(A),
@@ -98,7 +99,7 @@ find_min_list(L1, N):-
 %base cases for min-above-min
 min-above-min([], L2, 9999999999). % when L1 is empty, return False
 min-above-min(L1, [], X):-
-	X is find_min_list(L1, Y). %when L2 is empty, return the minimum of L1
+	find_min_list(L1, X). %when L2 is empty, return the minimum of L1
 
 
 	
