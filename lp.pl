@@ -73,20 +73,27 @@ sum-up-numbers-general([X|Y], Z) :-
 %3. predicate min-above-min(L1, L2, N)
 %using the same logic in assignmet 1
 %minimum predicate
-min(X, Y, Z):-
-	(X < Y
-	-> Z = X
-	; Z = Y).
+
+min(X, Y, X) :- X < Y.
+min(X, Y, Y) :- X >= Y.
+
 %finding minimum item of a list
-find_min_list([], 999999). %base case
+%find_min_list([], 999999). %base case
 find_min_list(X, Y):-
 	length(X,1),
 	[A|B] = X,
 	Y is A.
-find_min_list([H1,T1|T2], N):-
-	min(H1, T1, Z),
-	find_min_list(T2, T),
-	min(Z, T, N).
+find_min_list(L1, N):-
+	[A|B] = L1,	
+	number(A),
+	find_min_list(B, N1),
+	min(A, N1, N).
+
+find_min_list(L1, N):-
+	[A|B] = L1,
+	not(number(A)),
+	find_min_list(B,N).
+
 
 %base cases for min-above-min
 min-above-min([], L2, 9999999999). % when L1 is empty, return False
