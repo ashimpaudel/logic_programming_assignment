@@ -200,33 +200,41 @@ min-above-min(L1, L2, X) :-
 common-unique-elements([],[],[]).
 common-unique-elements(L1,[],[]). %when first list is empty
 common-unique-elements([],L2,[]). %when second list is empty
+%flattening a list
+c-flatten([],[]). %%empty list is already flattened
+
+%%for non empty, append the results of flattening head and tail
+
+c-flatten([H|T], R):-
+	c-flatten(H, FH),
+	c-flatten(T, FT),
+	append(FH, FT, R).
+%% when head is not itself a list, head of input list will be head of output list
+c-flatten([H|T], [H|RT]):-
+	H \= [],
+	H \= [_|_],
+	c-flatten(T,RT).
+
+
+
 
 %if first element of L1 is member of L2
-common-unique-elements(L1, L2, X) :-
+common-unique-elements(L11, L22, X) :-
+	c-flatten(L11,L1),
+	c-flatten(L22,L2),
 	[A|B] = L1,
 
-	not(is_list(A)),
+	%not(is_list(A)),
 	member(A,L2),   %if first element is in L2
 	common-unique-elements(B, L2, Y),
 	append([A],Y,X).
 
 %if first element is not member of L2
-common-unique-elements(L1, L2, X) :-
+common-unique-elements(L11, L22, X) :-
+	c-flatten(L11,L1),
+	c-flatten(L22,L2),
 	[A|B] = L1,
-	not(is_list(A)),
+	%not(is_list(A)),
 
 	not(member(A,L2)),   %if first element is in L2
 	common-unique-elements(B, L2, X).
-	
-%for nested list
-%when elements in L1 are nested
-common-unique-elements(L1, L2, X) :-
-	[A|B] = L1,
-	is_list(A),
-	common-unique-elements(A,L2,P).
-
-%when elements in L2 are nested
-common-unique-elements(L1,L2,X):-
-	[C|D] = L2,
-	is_list(C),
-	common-unique-elements(C,L1,P).
