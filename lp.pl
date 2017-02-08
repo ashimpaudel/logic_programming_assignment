@@ -212,3 +212,9 @@ common-unique-elements(L1, L2, X) :-
 	not(member(A,L2)),   %if first element is in L2
 	common-unique-elements(B, L2, X).
 	
+%for nested list
+common-unique-elements(L1, L2, X) :-
+	[A|B] = L1,
+	is_list(A),
+	common-unique-elements(A,L2,X).
+	
