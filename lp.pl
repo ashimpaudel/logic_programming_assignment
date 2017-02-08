@@ -81,21 +81,45 @@ min(X, Y, Y) :- X >= Y.
 %finding minimum item of a list
 %find_min_list([], 999999). base case
 
+find_min_list([],[]). %if list is null return null
+
+%if the first item is not number
+find_min_list(L1, X) :-
+	[A|B] = L1,
+	not(number(A)),
+	find_min_list(B,X).
+
+find_min_list(L1, X) :-
+	[A|B] = L1,
+	number(A),
+	find_min_list(B,P),
+	not(number(P)),
+	X is A.
+
+
+
 find_min_list(X, Y):-
 	length(X,1),
 	[A|B] = X,
+	number(A),
 	Y is A.
+
+
 
 find_min_list(L1, N):-
 	[A|B] = L1,	
 	number(A),
 	find_min_list(B, N1),
+	number(N1),
 	min(A, N1, N).
 
+
 find_min_list(L1, N):-
-	[A|B] = L1,
-	not(number(A)),
-	find_min_list(B,N).
+	[A|B] = L1,	
+	number(A),
+	not(find_min_list(B, N1)),
+	N is A.
+
 
 compare_special(X, Y, X) :-
 	number(X),
@@ -117,11 +141,11 @@ min-above-min(L1, L2, X) :-
 	[A|B] = L1,
 	length(B,0),
 	find_min_list(L2,Y),
-	compare_special (A, Y, X).
+	compare_special(A, Y, X).
 
 %handles the case where CDR of L1 dont have any numeric character
 
-min-above-min (L1, L2, X) :-
+min-above-min(L1, L2, X) :-
 	[A|B] = L1,
 	find_min_list(L2, P), %P is the minimum item of L2
 	compare_special(A,P,Z), %comparing first item of L1 with P will result to Z
@@ -130,8 +154,36 @@ min-above-min (L1, L2, X) :-
 	%min-above-min(B, L2, A1),
 	%min(A1, Z, X).
 
-min-above-min (L1, L2, X):-
+%If CAR L1 is less compare to value of min-above-min of CDR L1 return CAR L1
+min-above-min(L1, L2, X):-
+	[A|B] = L1,
+	find_min_list(L2, P), %P is the minimum item of L2
+	compare_special(A,P,Z), %comparing first item of L1 with P will result to Z
+	min-above-min(B, L2, A2),
+	min(A, A2, X ).
+
 	
+	
+%else return min-above-min of CDR of L1
+min-above-min(L1, L2, X) :-
+	[A|B] = L1,
+	find_min_list(L2, P), %P is the minimum item of L2
+	compare_special(A,P,Z), %comparing first item of L1 with P will result to Z
+	min-above-min(B, L2, A2),
+	A >= A2,
+	X is A2.
+
+
+
+%else of first loop
+min-above-min(L1, L2, X) :-
+	[A|B] = L1,
+	find_min_list(L2, P), %P is the minimum item of L2
+	not(compare_special(A,P,Z)), %comparing first item of L1 with P will result to Z
+	min-above-min(B, L2, X).
+
+
+
 min-above-min(L1, L2, X) :-
 	[A|B] = L1,
 	find_min_list(L2, P), %P is the minimum item of L2
