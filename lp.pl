@@ -193,3 +193,9 @@ min-above-min(L1, L2, X) :-
 
 	
 
+%4. common-unique-elements(L1,L2,N)
+%base-case, when both lists are empty
+common-unique-elements([],[],[]).
+common-unique-elements(L1,[],[]). %when first list is empty
+common-unique-elements([],L2,[]). %when second list is empty
+
