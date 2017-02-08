@@ -205,3 +205,10 @@ common-unique-elements(L1, L2, X) :-
 	member(A,L2),   %if first element is in L2
 	common-unique-elements(B, L2, Y),
 	append([A],Y,X).
+
+common-unique-elements(L1, L2, X) :-
+	[A|B] = L1,
+
+	not(member(A,L2)),   %if first element is in L2
+	common-unique-elements(B, L2, X).
+	
